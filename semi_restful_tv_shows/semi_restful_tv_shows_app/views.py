@@ -1,6 +1,8 @@
+from django.core.checks import messages
 from django.db import models
 from django.shortcuts import redirect, render, HttpResponse
 from . models import Show
+from django.contrib import messages
 
 
 def index(request):
@@ -22,20 +24,34 @@ def delete_show(request, show_id):
     return redirect('/shows')
 
 def update_show(request, show_id):
-    
-    edit = Show.objects.get(id=show_id)
-    edit.title = request.POST['title']
-    edit.network = request.POST['network']
-    edit.release_date = request.POST['release_date']
-    edit.desc= request.POST['desc']
-    print("Show has updated in db")
-    edit.save()
-    return redirect(f"/show_details/{edit.id}")
+# Validations
+    errors = Show.objects.basic_validator(request.POST)
+    if len(errors) > 0:
+        for key, value in errors.items():
+            messages.error(request, value)
+        # return redirect("/shows/"+id+"/new")
+        return render(request, "edit_show.html")
+    else:   
+        edit = Show.objects.get(id=show_id)
+        edit.title = request.POST['title']
+        edit.network = request.POST['network']
+        edit.release_date = request.POST['release_date']
+        edit.desc= request.POST['desc']
+        print("Show has updated in db")
+        edit.save()
+        return redirect(f"/show_details/{edit.id}")
 
 
 def create_new_show(request):
-    show = Show.objects.create (title = request.POST['title'], release_date = request.POST['release_date'], desc = request.POST['desc'], network = request.POST['network'])
-    return redirect(f"/show_details/{show.id}")
+# Validations
+    errors = Show.objects.basic_validator(request.POST)
+    if len(errors) > 0:
+        for key, value in errors.items():
+            messages.error(request, value)
+        return redirect('/shows/new')
+    else:
+        show = Show.objects.create (title = request.POST['title'], release_date = request.POST['release_date'], desc = request.POST['desc'], network = request.POST['network'])
+        return redirect(f"/show_details/{show.id}")
 
 
 def display_show_info(request, show_id):

@@ -37,6 +37,13 @@
             <!-- we are creating a new show, this hidden input cannot provide POST info with an ID if it hasn't been created yet -->
             <button type="submit" class="btn btn-primary">Create</button>
         </form>
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
     </div>
 </body>
 </html>
