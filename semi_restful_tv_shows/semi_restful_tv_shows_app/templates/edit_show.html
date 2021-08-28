@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<!-- static css -->
+</head>
+<body>
+    <div id="wrapper">
+        <a href="/">Go Back</a>
+        <h1>Edit Show {{shows.id}}</h1>
+
+        <form action="update" method="POST">
+        {% csrf_token %}
+            <div class="form-group">
+                <label for="title">Title</label>
+                <input type="text" class="form-control" name="title" value="{{shows.title}}" id="showTitle" aria-describedby="emailHelp">
+            </div>
+            <div class="form-group">
+                <label for="network">Network</label>
+                <input type="text" class="form-control" name="network" value="{{shows.network}}" id="show_network">
+            </div>
+            <div class="form-group">
+                <label for="release_date">Release Date</label>
+                <input type="date"  class="form-control" name="release_date" value="{{shows.release_date|date:'Y-m-d'}}" id="show_release">
+            </div>
+            <div class="form-group">
+                <label for="description">Description</label>
+                <textarea class="form-control" name="desc"  id="showdesc" rows="3">{{shows.desc}}</textarea>
+            </div>
+            <input type="hidden" name="show" value="{{show.id}}">
+            <!-- <input type="hiddin" name="network" value="{{network.id}}"> -->
+            <button type="submit" class="btn btn-primary">Update</button>
+        </form>
+        <a href="/show_details/{{shows.id}}">Go to Show</a>
+    </div>
+</body>
+</html>

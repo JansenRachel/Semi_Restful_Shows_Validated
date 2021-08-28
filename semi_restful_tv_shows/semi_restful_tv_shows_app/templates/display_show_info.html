@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Show Info</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<!-- static css -->
+</head>
+<body>
+    <div id="wrapper">
+        <a href="/">Go Back</a>
+
+        <h1>TV Show {{shows.id}}</h1>
+        <p>Title: {{shows.title}}</p>
+        <p>Network: {{shows.network}}</p>
+        <p>Release Date: {{shows.release_date}}</p>
+        <p>Description: {{shows.desc}}</p>
+        
+        <p>Last Updated: {{shows.updated_at}}</p>
+
+        <!-- fix <a> paths -->
+        <a href="/shows/{{shows.id}}/destroy">Delete</a>
+        <a href="/shows/{{shows.id}}/edit">Edit</a>
+
+        <!-- <a href="show_id/destroy">Delete</a>  -->
+    </div>
+</body>
+</html>
